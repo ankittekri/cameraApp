@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CameraApp</string>
+    <string name="photo">photo</string>
+    <string name="action_settings">Settings</string>
+    <string name="use_existing">Use an existing Folder</string>
+    <string name="create_new">Create a new Folder</string>
+    <string name="future_use">Use the same folder in future</string>
+
+</resources>

@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 	public static final int MEDIA_TYPE_VIDEO = 2;
 
 	// directory name to store captured images and videos
-	private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
+	private static final String IMAGE_DIRECTORY_NAME = "CameraApp Images";
 
 	private Uri fileUri; // file url to store image/video
 
@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		imgPreview = (ImageView) findViewById(R.id.imgPreview);
 		videoPreview = (VideoView) findViewById(R.id.videoPreview);
 		btnCapturePicture = (Button) findViewById(R.id.btnCapturePicture);
@@ -199,6 +199,7 @@ public class MainActivity extends Activity {
 			videoPreview.setVisibility(View.GONE);
 
 			imgPreview.setVisibility(View.VISIBLE);
+			galleryAddMedia(fileUri);
 
 			// bimatp factory
 			BitmapFactory.Options options = new BitmapFactory.Options();
@@ -215,6 +216,8 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
+		
 
 	/*
 	 * Previewing recorded video
@@ -225,6 +228,7 @@ public class MainActivity extends Activity {
 			imgPreview.setVisibility(View.GONE);
 
 			videoPreview.setVisibility(View.VISIBLE);
+			galleryAddMedia(fileUri);
 			videoPreview.setVideoPath(fileUri.getPath());
 			// start playing
 			videoPreview.start();
@@ -247,7 +251,7 @@ public class MainActivity extends Activity {
 	/*
 	 * returning image / video
 	 */
-	private static File getOutputMediaFile(int type) {
+	private  File getOutputMediaFile(int type) {
 
 		// External sdcard location
 		File mediaStorageDir = new File(
@@ -271,13 +275,23 @@ public class MainActivity extends Activity {
 		if (type == MEDIA_TYPE_IMAGE) {
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator
 					+ "IMG_" + timeStamp + ".jpg");
+			//galleryAddPic(mediaFile.toString());
+			
 		} else if (type == MEDIA_TYPE_VIDEO) {
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator
 					+ "VID_" + timeStamp + ".mp4");
+			//galleryAddPic(mediaFile.toString());
 		} else {
 			return null;
 		}
 
 		return mediaFile;
+	}
+	
+	public  void galleryAddMedia(Uri contentUri) {
+	   // File f = new File(file);
+	   // Uri contentUri = Uri.fromFile(f);
+	    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,contentUri);
+	    sendBroadcast(mediaScanIntent);
 	}
 }
